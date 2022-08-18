@@ -1,0 +1,1 @@
+C:\Users\cisse\MongoDB\Server\4.4\bin\mongod.exe --dbpath C:\Users\cisse\MongoDB\data

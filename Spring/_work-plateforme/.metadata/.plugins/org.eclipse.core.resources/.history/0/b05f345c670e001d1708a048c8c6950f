@@ -1,0 +1,13 @@
+package com.mood.login.dao;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+import com.mood.login.modele.User;
+
+
+@RepositoryRestResource(collectionResourceRel = "userdata", path = "userdata")
+public interface UserRepository extends MongoRepository<User, String> {
+	
+}

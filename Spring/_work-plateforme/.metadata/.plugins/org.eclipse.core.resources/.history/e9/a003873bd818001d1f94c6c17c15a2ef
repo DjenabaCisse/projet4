@@ -1,0 +1,5 @@
+package com.mood.login.http.controller;
+
+public class MoodRestAPIs {
+
+}

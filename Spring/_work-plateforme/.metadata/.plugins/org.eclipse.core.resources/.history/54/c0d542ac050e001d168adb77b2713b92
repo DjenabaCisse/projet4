@@ -1,0 +1,9 @@
+package com.mood.login.dao;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.mood.login.modele.User;
+
+public interface UserRepository extends CrudRepository<User, Integer> {
+
+}
