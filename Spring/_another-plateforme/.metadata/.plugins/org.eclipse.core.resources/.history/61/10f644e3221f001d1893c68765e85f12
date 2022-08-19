@@ -1,0 +1,108 @@
+package com.mood.login.http.controller;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mood.login.dao.MoodRepository;
+import com.mood.login.dao.UserRepository;
+import com.mood.login.message.request.MoodForm;
+import com.mood.login.message.response.ResponseMessage;
+import com.mood.login.modele.Mood;
+import com.mood.login.modele.MoodName;
+import com.mood.login.modele.Role;
+import com.mood.login.modele.RoleName;
+
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RestController
+@RequestMapping("/api/mood")
+public class MoodRestAPIs {
+
+	
+	@Autowired
+	MoodRepository moodRepository; 
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	
+	@PostMapping("/registermood")
+	public ResponseEntity<?> registerMood (@Valid @RequestBody MoodForm moodRequest) {
+		/*if(moodRepository.findByName(moodRequest.getMood())) {
+			return new ResponseEntity<>(new ResponseMessage("Fail -> Mood is already registered!"), HttpStatus.BAD_REQUEST);
+		}*/
+	
+			Mood mood = new Mood();
+			Set<String> strMoods = moodRequest.getMood(); 
+			Set<Mood> moods = new HashSet<>();
+			
+			
+
+		    strMoods.forEach(mood -> {
+		      switch (mood) {
+		      
+		      case "verybad":
+		        Mood veryBadMood = moodRepository.findByName(MoodName.MOOD_VERYBAD)
+		            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: Mood not found."));
+		        moods.add(veryBadMood);
+		        
+		        break;
+		        
+		      case "bad":
+			        Mood badMood = moodRepository.findByName(MoodName.MOOD_BAD)
+			            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: Mood not found."));
+			        moods.add(badMood);
+			        
+			        break;
+			        
+		      case "neutral":
+			        Mood neutralMood = moodRepository.findByName(MoodName.MOOD_NEUTRAL)
+			            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: Mood not found."));
+			        moods.add(neutralMood);
+			        
+			        break;
+			        
+			        
+		      case "good":
+			        Mood goodMood = moodRepository.findByName(MoodName.MOOD_GOOD)
+			            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: Mood not found."));
+			        moods.add(goodMood);
+			        
+			        break;
+			        
+		      case "verygood":
+			        Mood veryGoodMood = moodRepository.findByName(MoodName.MOOD_VERYGOOD)
+			            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: Mood not found."));
+			        moods.add(veryGoodMood);
+			        
+			        break;
+			       
+		      default:
+		        Mood noMood = moodRepository.findByName(MoodName.MOOD_NEUTRAL)
+		            .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+		        moods.add(noMood);
+		      }
+		      
+		    });
+
+			mood.setMoods(moods);
+	
+			moodRepository.save(mood); 
+			
+	return new ResponseEntity<>(new ResponseMessage("Mood registered successfully"), HttpStatus.OK); 
+	
+	}
+	
+	
+	
+}

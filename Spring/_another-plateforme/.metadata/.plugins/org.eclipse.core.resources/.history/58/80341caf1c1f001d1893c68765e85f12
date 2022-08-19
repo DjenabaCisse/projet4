@@ -1,0 +1,5 @@
+package com.mood.login.dao;
+
+public interface MoodRepository {
+
+}

@@ -1,0 +1,5 @@
+package com.mood.login.message.request;
+
+public class MoodForm {
+
+}
